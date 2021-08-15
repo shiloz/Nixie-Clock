@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="reference"
+      content="https://summer10920.github.io/skillStudies_JS_WebDemo/digiClock/"
+    />
+
+    <title>Nixie Clock</title>
+    <!-- icons -->
+    <link
+      rel="shortcut icon"
+      href="https://cdn.custom-cursor.com/db/8469/32/hanako-kun-mokke-and-candy-pointer.png"
+      type="image/x-icon"
+    />
+    <style>
+      body {
+        margin: 0;
+        background: rgb(0, 0, 0);
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: url(https://cdn.custom-cursor.com/db/cursor/32/Noragami_Yato_Crown_Cursor.png),
+          progress;
+      }
+      .digi {
+        display: flex;
+      }
+
+      .mg1,
+      .mg2,
+      .mg3,
+      .mg4,
+      .mg5,
+      .mg6,
+      .mg7,
+      .mg8,
+      .mg9,
+      .mg0 {
+        width: calc(100px * 2.16);
+        height: calc(100px * 3.24);
+        background: url("./nixie-numbers.png");
+        clip-path: polygon(
+          87% 0,
+          18% 0,
+          46% 49%,
+          0 0,
+          0 8%,
+          34% 42%,
+          0 25%,
+          0 100%,
+          100% 100%,
+          100% 0,
+          69% 0,
+          0 40%
+        );
+      }
+      .mgd {
+        /* 選取底圖區域 */
+        width: calc(50px * 2.16);
+        height: calc(100px * 3.24);
+        background: url("./nixie-numbers.png");
+        /* 從右邊開始選取 */
+        background-position: right;
+      }
+      .mg1 {
+        background-position: calc(-100px * 2.16);
+      }
+      .mg2 {
+        background-position: calc(-200px * 2.16);
+      }
+      .mg3 {
+        background-position: calc(-300px * 2.16);
+      }
+      .mg4 {
+        background-position: calc(-400px * 2.16);
+      }
+      .mg5 {
+        background-position: calc(-500px * 2.16);
+      }
+      .mg0 {
+        background-position: 0px;
+      }
+      .mg9 {
+        background-position: calc(150px * 2.16);
+      }
+      .mg8 {
+        background-position: calc(250px * 2.16);
+      }
+      .mg7 {
+        background-position: calc(350px * 2.16);
+      }
+      .mg6 {
+        background-position: calc(450px * 2.16);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="digi">
+      <!-- 時顯示 -->
+      <div id="ck1" class="mg1"></div>
+      <div id="ck2" class="mg2"></div>
+      <!-- 時間冒號 -->
+      <div class="mgd"></div>
+      <!-- 分顯示 -->
+      <div id="ck3" class="mg3"></div>
+      <div id="ck4" class="mg4"></div>
+      <!-- 時間冒號 -->
+      <div class="mgd"></div>
+      <!-- 秒顯示 -->
+
+      <div id="ck5" class="mg5"></div>
+      <div id="ck6" class="mg6"></div>
+    </div>
+
+    <script>
+      const refresh = () => {
+        const nt = new Date();
+        const nh = nt.getHours(),
+          nm = nt.getMinutes(),
+          ns = nt.getSeconds();
+
+        const nk1 = Math.floor(nh / 10),
+          nk2 = nh % 10,
+          nk3 = Math.floor(nm / 10),
+          nk4 = nm % 10,
+          nk5 = Math.floor(ns / 10),
+          nk6 = ns % 10;
+
+        document.getElementById("ck1").className = `mg${nk1}`;
+        document.getElementById("ck2").className = `mg${nk2}`;
+        document.getElementById("ck3").className = `mg${nk3}`;
+        document.getElementById("ck4").className = `mg${nk4}`;
+        document.getElementById("ck5").className = `mg${nk5}`;
+        document.getElementById("ck6").className = `mg${nk6}`;
+
+        document.getElementsByClassName("mgd")[0].style.opacity = 1;
+        document.getElementsByClassName("mgd")[1].style.opacity = 1;
+        setTimeout(() => {
+          document.getElementsByClassName("mgd")[0].style.opacity = 0;
+          document.getElementsByClassName("mgd")[1].style.opacity = 0;
+        }, 500);
+      };
+      setInterval(refresh, 1000);
+      refresh();
+    </script>
+  </body>
+</html>
